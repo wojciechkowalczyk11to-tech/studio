@@ -1,0 +1,73 @@
+# Termux AI Agent - PRODUCTION AGGRESSIVE MODE
+# Budget: $800 Gemini + $3,500 Vertex AI
+# Installation: pip install -r requirements.txt
+
+# ===== CRITICAL: Google Cloud Integration =====
+google-generativeai>=0.8.3           # Native Gemini 2.0 Flash API
+google-cloud-discoveryengine>=0.11.0 # Vertex AI Search (MUST HAVE)
+google-cloud-aiplatform>=1.133.0     # Vertex AI Platform
+google-auth>=2.29.0                  # Authentication
+google-auth-oauthlib>=1.2.0          # OAuth2
+google-auth-httplib2>=0.2.0          # HTTP auth
+google-api-core>=2.19.0              # API core utilities
+
+# ===== Core Dependencies =====
+python>=3.11.0
+asyncio>=3.4.3
+aiohttp>=3.13.3
+aiofiles>=24.1.0
+
+# ===== AI/ML Libraries =====
+sentence-transformers>=2.7.0         # Embeddings for knowledge graph (CRITICAL)
+torch>=2.3.0                         # PyTorch (required by sentence-transformers)
+numpy>=1.26.0
+scipy>=1.13.0
+
+# ===== Database (SQLite-based, NO Redis/Neo4j) =====
+sqlalchemy>=2.0.30                   # ORM for SQLite
+aiosqlite>=0.20.0                    # Async SQLite
+
+# ===== Configuration =====
+pyyaml>=6.0.1
+python-dotenv>=1.0.1
+
+# ===== Logging =====
+loguru>=0.7.2
+
+# ===== Testing =====
+pytest>=8.2.0
+pytest-asyncio>=0.23.7
+pytest-cov>=5.0.0
+pytest-mock>=3.14.0
+
+# ===== Utilities =====
+click>=8.1.7                         # CLI framework
+rich>=13.7.1                         # Beautiful terminal output
+tqdm>=4.66.4                         # Progress bars
+python-dateutil>=2.9.0
+
+# ===== HTTP/API =====
+requests>=2.32.0
+httpx>=0.27.0
+
+# ===== Data Validation =====
+pydantic>=2.7.0                      # Data validation
+jsonschema>=4.22.0
+
+# ===== System Utilities =====
+psutil>=5.9.8                        # System monitoring
+
+# ===== Termux-Specific (may fail on non-Termux) =====
+# termux-api-python>=0.1.0           # Uncomment if Termux:API installed
+
+# ===== Development Tools (optional) =====
+black>=24.4.2
+mypy>=1.10.0
+ipython>=8.25.0
+
+# ===== REMOVED (too heavy for Termux) =====
+# neo4j - replaced with SQLite + embeddings
+# redis - replaced with SQLite caching
+# transformers - too heavy, using sentence-transformers only
+# spacy - too heavy
+# fastapi/uvicorn - not needed for CLI agent

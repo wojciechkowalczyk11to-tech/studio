@@ -1,0 +1,7 @@
+services:
+  hub:
+    build: .
+    restart: unless-stopped
+    env_file:
+      - .env
+    command: ["python", "-m", "nexus_mcp_hub.hub", "--servers", "cf,gcp,vercel,vertex"]

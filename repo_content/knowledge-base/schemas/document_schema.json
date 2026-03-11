@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Nexus Knowledge Base Index",
+  "type": "object",
+  "required": ["version", "generated_at", "documents"],
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "documents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "source_file",
+          "output_file",
+          "language",
+          "bytes_size",
+          "extracted_at"
+        ],
+        "properties": {
+          "path": {"type": "string"},
+          "source_file": {"type": "string"},
+          "output_file": {"type": "string"},
+          "language": {"type": "string"},
+          "bytes_size": {"type": "integer", "minimum": 0},
+          "extracted_at": {"type": "string", "format": "date-time"}
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": false
+}

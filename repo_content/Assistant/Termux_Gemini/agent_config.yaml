@@ -1,0 +1,258 @@
+# Termux AI Agent - PRODUCTION AGGRESSIVE MODE Configuration
+# Budget: $800 Gemini + $3,500 Vertex AI
+# DO NOT OPTIMIZE FOR COST - OPTIMIZE FOR QUALITY
+
+# ===== AGENT SETTINGS =====
+agent:
+  name: "TermuxAgent"
+  version: "2.0-aggressive"
+  
+  # AGGRESSIVE: Deep reasoning for best results
+  reasoning_depth: 7                 # Max depth (was 5 in POC)
+  reasoning_mode: "deep"             # Options: basic, standard, deep, expert
+  
+  # AGGRESSIVE: Frequent self-improvement
+  self_improvement_enabled: true
+  improvement_frequency: 5           # Every 5 tasks (was 10)
+  
+  # AGGRESSIVE: Strict verification but allow execution
+  verification_level: "strict"       # Options: basic, standard, strict, paranoid
+  quality_threshold: 0.7             # Minimum quality score to accept
+  
+  # Learning settings
+  learning_rate: 0.01
+  confidence_initial: 0.5
+  confidence_growth_rate: 0.01
+
+# ===== GOOGLE CLOUD SETTINGS =====
+google_cloud:
+  # Project settings (REQUIRED - set via .env or here)
+  project_id: "${GCP_PROJECT_ID}"    # Your GCP project ID
+  location: "global"                  # Vertex Search location
+  
+  # Service Account (REQUIRED)
+  credentials_path: "config/service-account-key.json"
+
+# ===== GEMINI API SETTINGS =====
+gemini:
+  # API Key (REQUIRED - set via .env)
+  api_key: "${GEMINI_API_KEY}"
+  
+  # Model selection
+  model: "gemini-2.0-flash-exp"      # Latest and best
+  fallback_model: "gemini-1.5-flash" # Backup if 2.0 unavailable
+  
+  # AGGRESSIVE: Maximum context and quality
+  max_output_tokens: 8192            # Use full context window
+  temperature: 0.7                   # Balanced creativity/consistency
+  top_p: 0.95
+  top_k: 40
+  
+  # Safety settings (AGGRESSIVE: Minimal filtering)
+  safety_settings:
+    hate_speech: "BLOCK_NONE"
+    harassment: "BLOCK_NONE"
+    sexually_explicit: "BLOCK_NONE"
+    dangerous_content: "BLOCK_NONE"
+  
+  # Retry settings
+  max_retries: 3
+  retry_backoff: 2.0                 # Exponential backoff multiplier
+  timeout: 60                        # 60 seconds timeout
+
+# ===== VERTEX AI SEARCH SETTINGS =====
+vertex_ai_search:
+  # CRITICAL: MUST BE ENABLED (this is aggressive mode!)
+  enabled: true                      # NO SIMULATION, REAL API ONLY
+  aggressive_mode: true              # No cost optimization
+  
+  # Datastore configuration
+  datastore_id: "${VERTEX_DATASTORE_ID}"  # Your datastore ID
+  
+  # Search settings
+  queries_per_task: 5                # Multiple queries for comprehensive context
+  max_results_per_query: 10          # More results = better context
+  
+  # Advanced features (ENABLED)
+  enable_semantic_search: true       # AI-powered semantic understanding
+  enable_hybrid_search: true         # Combine keyword + semantic
+  enable_extractive_answers: true    # GPT-like answer extraction
+  max_extractive_answers: 3          # Extract up to 3 answers per query
+  
+  # Query expansion (better recall)
+  enable_query_expansion: true
+  enable_spell_correction: true
+  
+  # Ranking
+  semantic_boost: 1.5                # Boost semantic relevance
+  recency_boost: 1.2                 # Slightly favor recent docs
+  
+  # Caching (for PERFORMANCE not COST)
+  cache_enabled: true
+  cache_ttl_seconds: 3600            # 1 hour
+  
+  # Multi-datastore support (future expansion)
+  datastores:
+    documentation:
+      id: "${VERTEX_DATASTORE_DOCS}"  # Optional: separate docs datastore
+      enabled: false
+    code_examples:
+      id: "${VERTEX_DATASTORE_CODE}"  # Optional: code search datastore
+      enabled: false
+
+# ===== MEMORY & PERSISTENCE =====
+memory:
+  # CRITICAL: SQLite-based persistence (NO JSON files)
+  persistence_enabled: true
+  storage_backend: "sqlite"          # Options: sqlite, json (use sqlite!)
+  
+  # Database paths
+  experience_replay_db: "memory/experience_replay.db"
+  knowledge_graph_db: "memory/knowledge_graph.db"
+  agent_state_db: "memory/agent_state.db"
+  
+  # AGGRESSIVE: Large buffers for better learning
+  max_episodic_memories: 1000        # Was 500 in POC
+  max_semantic_concepts: 5000        # Was 1000 in POC
+  experience_replay_size: 500        # Was 100 in POC
+  
+  # Knowledge graph settings
+  embedding_model: "all-MiniLM-L6-v2"  # Lightweight but effective
+  embedding_dimension: 384           # Model dimension
+  
+  # Consolidation settings
+  consolidation_enabled: true
+  consolidation_threshold: 0.8       # Merge similar memories
+  consolidation_frequency: 100       # Every 100 experiences
+  
+  # Cleanup settings
+  max_age_days: 90                   # Delete experiences older than 90 days
+  min_importance: 0.3                # Delete low-importance memories
+
+# ===== LEARNING SETTINGS =====
+learning:
+  # AGGRESSIVE: Use Vertex AI for learning
+  enable_vertex_learning: true       # Learn from external docs
+  enable_pattern_recognition: true   # Recognize success patterns
+  enable_meta_learning: true         # Learn how to learn
+  
+  # Experience replay
+  experience_replay_enabled: true
+  replay_batch_size: 50              # Large batches
+  replay_strategies:
+    - "random"
+    - "high_quality"
+    - "diverse"
+    - "prioritized"
+  
+  # Self-improvement
+  improvement_strategies:
+    - "deep_reasoning_enhancement"
+    - "parallel_reasoning_paths"
+    - "adaptive_step_sizing"
+    - "error_recovery_optimization"
+    - "experience_replay_optimization"
+    - "meta_learning_integration"
+
+# ===== COST MONITORING =====
+cost_monitoring:
+  # IMPORTANT: Monitor but DON'T THROTTLE
+  enabled: true
+  
+  # Budget limits (for ALERTS only, not blocking)
+  total_budget: 4300                 # $800 + $3500
+  gemini_budget: 800
+  vertex_budget: 3500
+  
+  # Alert thresholds (percentage)
+  alert_at_percent:
+    - 50
+    - 75
+    - 90
+  
+  # Logging
+  log_costs_daily: true
+  cost_log_file: "logs/costs.json"
+  
+  # CRITICAL: Do NOT throttle
+  throttle_on_budget: false          # Never block requests
+
+# ===== LOGGING =====
+logging:
+  # Log levels: DEBUG, INFO, WARNING, ERROR, CRITICAL
+  level: "INFO"
+  
+  # Log files
+  log_dir: "logs"
+  agent_log: "logs/agent_{date}.log"
+  error_log: "logs/errors_{date}.log"
+  cost_log: "logs/costs.json"
+  
+  # Rotation
+  max_log_size_mb: 50
+  backup_count: 5
+  
+  # Format
+  format: "%(asctime)s [%(levelname)s] %(name)s: %(message)s"
+  date_format: "%Y-%m-%d %H:%M:%S"
+  
+  # Console output
+  console_enabled: true
+  console_level: "INFO"
+  
+  # Rich formatting (colors, emojis)
+  use_rich_formatting: true
+
+# ===== TERMUX-SPECIFIC =====
+termux:
+  # Resource limits (GENEROUS for aggressive mode)
+  max_memory_mb: 1024                # 1GB max (was 512)
+  max_cpu_percent: 80                # Allow high CPU usage
+  
+  # Power saving (DISABLED in aggressive mode)
+  enable_power_saving: false         # We have power!
+  
+  # API integration
+  termux_api_enabled: false          # Enable if Termux:API installed
+  
+  # Widget settings
+  widget_update_interval: 300        # 5 minutes
+
+# ===== FEATURE FLAGS =====
+features:
+  # Core features (all ENABLED)
+  chain_of_thought: true
+  reflection: true
+  strategic_planning: true
+  self_improvement: true
+  
+  # Advanced features (ENABLED in aggressive mode)
+  multi_source_reasoning: true       # Search docs before execution
+  conversation_mode: true
+  streaming_responses: true
+  
+  # Experimental features
+  voice_interface: false             # Requires Termux:API
+  distributed_learning: false        # Future: multi-device
+  
+# ===== DEVELOPMENT =====
+development:
+  # Debug mode
+  debug_enabled: false
+  
+  # Testing
+  test_mode: false
+  mock_api_calls: false              # Use real APIs!
+  
+  # Profiling
+  enable_profiling: false
+  profile_output: "logs/profile_{date}.json"
+
+# ===== METADATA =====
+metadata:
+  config_version: "2.0"
+  created: "2026-01-30"
+  mode: "PRODUCTION_AGGRESSIVE"
+  budget_total: 4300
+  budget_gemini: 800
+  budget_vertex: 3500

@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.env
+.pytest_cache/
+alembic/versions/*.pyc
+node_modules/
+.venv/
+*.egg-info/
+dist/
+htmlcov/
+*.db
+test.db

@@ -1,0 +1,12 @@
+-e ../nexus_shared
+mcp>=1.9.0
+httpx
+pydantic
+pydantic-settings
+google-cloud-compute
+google-cloud-run
+google-cloud-storage
+google-cloud-iam
+google-cloud-billing
+google-cloud-discoveryengine
+google-genai

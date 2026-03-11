@@ -1,0 +1,6 @@
+-e ../nexus_shared
+click
+rich
+google-genai
+httpx
+pydantic
